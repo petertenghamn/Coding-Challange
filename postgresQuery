@@ -1,0 +1,21 @@
+--CREATE TABLE IF NOT EXISTS public.customers
+--(
+--    customer_id serial NOT NULL,
+--    email_address text,
+--    phone_number text,
+--    viewed_personal numeric,
+--    PRIMARY KEY (customer_id)
+--);
+--
+--ALTER TABLE public.customers
+--    OWNER to postgres;
+
+
+SELECT * FROM customers;
+--SELECT * FROM landing_pages;
+
+
+--INSERT INTO customers (email_address, phone_number, viewed_personal) VALUES
+--('petertenghamn@hotmail.com', '+46707671487', 0),
+--('admin@gmail.com', '+46133769420', 0),
+--('test@gmail.com', '+46101341454', 0);
