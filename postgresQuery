@@ -19,3 +19,10 @@ SELECT * FROM customers;
 --('petertenghamn@hotmail.com', '+46707671487', 0),
 --('admin@gmail.com', '+46133769420', 0),
 --('test@gmail.com', '+46101341454', 0);
+
+--INSERT INTO landing_pages (page_hits, video_plays, customer_id) VALUES
+--(0,0,1),
+--(0,0,1),
+--(0,0,2),
+--(0,0,3),
+--(0,0,2);

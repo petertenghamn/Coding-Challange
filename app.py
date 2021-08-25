@@ -15,8 +15,21 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_
 
 @app.route('/')
 def home():
+    return "Routes available = [GET](/customers, /landingpages) [POST]() "
+
+@app.route('/customers')
+def customers():
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute("SELECT * FROM customers;")
+    output = str(cur.fetchall())
+    conn.commit()
+    cur.close()
+    return output
+
+@app.route('/landingpages')
+def landingpages():
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute("SELECT * FROM landing_pages;")
     output = str(cur.fetchall())
     conn.commit()
     cur.close()
