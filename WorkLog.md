@@ -17,8 +17,11 @@ Python REST API implementation -
 
 -	(~30 min) Setup Flask environment with python - debugging took 30 min to work out and run successfully as I am getting used to python workstation and setting up modules with it. *Environment path errors mainly
 
--   ~30 min, setting up the initial route and getting the first get request, returning the list of customers from the customer table. Some minor issues with type converting to be able to print out the result of the query, making it more complex by first going with json type and conversions when a simple str() of the results did the trick.
+-   ~45 min, setting up the initial route and getting the first get request, returning the list of customers from the customer table. Some minor issues with type converting to be able to print out the result of the query, making it more complex by first going with json type and conversions when a simple str() of the results did the trick.
 
+-   ~15 min, reproducing the get requests to multiple functions, just simply returning the lists as strings which can be converted by the frontend, or sent via different formats
+
+-   ~1 hour, POST methods with basic data type verification, time extended due to a type error when parsing the data from postman, this was due to importing two modules for request which went unnoticed for a while. After the error was spotted the request went through without issue and the post method to add a user was verified.
 
 •	Full-Stack
 
