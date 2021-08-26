@@ -24,6 +24,13 @@ def validEmail(email):
     else:
         return False
 
+def isAnInt(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 @app.route('/')
 def home():
     return "Routes available = [GET](/customers, /landingpages) [POST](checked using Postman)"
@@ -54,7 +61,7 @@ def addCustomer():
             cur.close()
             return "Customer added successfully!"
         else:
-            resp = jsonify({'message' : 'Bad Request - invalid email'})
+            resp = jsonify({'message' : 'Bad Request - invalid email format'})
             resp.status_code = 400
             return resp
     else:
@@ -62,19 +69,48 @@ def addCustomer():
         resp.status_code = 400
         return resp
 
-@app.route('/customers/update')
+@app.route('/customers/update', methods=['POST'])
 def updateCustomer():
     #verify that all fields exist
+    _json = request.json
+    _email = _json['email']
+    _phone = _json['phone']
+    _pagevisits = _json['pagevisits']
 
-    #if one is missing, return error
+    if _email and _phone and _pagevisits:
+        #check to see if the fields are of the correct type
+        if (validEmail(_email)):
+            if (isAnInt(_pagevisits)):
+                #check that the user exists in the DB
+                cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+                cur.execute("SELECT * FROM customers WHERE email_address=%s;", (_email,))
+                row = cur.fetchone()
+                email = row['email_address']
 
-    #check to see if the fields are of the correct type
-
-    #check that the user exists in the DB
-
-    #attempt to write over the existing one
-
-    return "Customer updated!"
+                if row:
+                    if (email==_email):
+                        #attempt to write over the existing one
+                        cur = conn.cursor()
+                        cur.execute("UPDATE customers SET phone_number='"+_phone+"', viewed_personal="+_pagevisits+" WHERE email_address='"+_email+"';")
+                        conn.commit()
+                        cur.close()
+                        return "Customer updated!"
+                    else:
+                        resp = jsonify({'message' : 'Bad Request - invalid email'})
+                        resp.status_code = 400
+                        return resp
+            else:
+                resp = jsonify({'message' : 'Bad Request - invalid format of page visits value'})
+                resp.status_code = 400
+                return resp
+        else:
+            resp = jsonify({'message' : 'Bad Request - invalid email format'})
+            resp.status_code = 400
+            return resp
+    else:
+        resp = jsonify({'message' : 'Bad Request - invalid data'})
+        resp.status_code = 400
+        return resp
 
 @app.route('/landingpages')
 def landingpages():

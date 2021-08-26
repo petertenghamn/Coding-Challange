@@ -23,5 +23,11 @@ Python REST API implementation -
 
 -   ~1 hour, POST methods with basic data type verification, time extended due to a type error when parsing the data from postman, this was due to importing two modules for request which went unnoticed for a while. After the error was spotted the request went through without issue and the post method to add a user was verified.
 
+-   ~30 min, making the POST method to update the users details, like adding views or changing their phone number
+
 •	Full-Stack
 
+
+
+That was about 5 hours, so I intend to stop here.
+5 hours 30 min according to tracked above, though they are estimated

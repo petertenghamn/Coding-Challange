@@ -1,19 +1,37 @@
---CREATE TABLE IF NOT EXISTS public.customers
---(
---    customer_id serial NOT NULL,
---    email_address text,
---    phone_number text,
---    viewed_personal numeric,
---    PRIMARY KEY (customer_id)
---);
---
---ALTER TABLE public.customers
---    OWNER to postgres;
+-- Table: public.customers
+
+-- DROP TABLE public.customers;
+
+CREATE TABLE IF NOT EXISTS public.customers
+(
+    customer_id integer NOT NULL DEFAULT nextval('customers_customer_id_seq'::regclass),
+    email_address text COLLATE pg_catalog."default",
+    phone_number text COLLATE pg_catalog."default",
+    viewed_personal integer,
+    CONSTRAINT customers_pkey PRIMARY KEY (customer_id)
+)
+
+-- Table: public.landing_pages
+
+-- DROP TABLE public.landing_pages;
+
+CREATE TABLE IF NOT EXISTS public.landing_pages
+(
+    landing_page_id integer NOT NULL DEFAULT nextval('landing_pages_landing_page_id_seq'::regclass),
+    page_hits integer,
+    video_plays integer,
+    customer_id integer NOT NULL DEFAULT nextval('landing_pages_customer_id_seq'::regclass),
+    CONSTRAINT landing_pages_pkey PRIMARY KEY (landing_page_id),
+    CONSTRAINT customer_id FOREIGN KEY (customer_id)
+        REFERENCES public.customers (customer_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
 
 
 SELECT * FROM customers;
 --SELECT * FROM landing_pages;
-
 
 --INSERT INTO customers (email_address, phone_number, viewed_personal) VALUES
 --('petertenghamn@hotmail.com', '+46707671487', 0),
@@ -26,3 +44,5 @@ SELECT * FROM customers;
 --(0,0,2),
 --(0,0,3),
 --(0,0,2);
+
+--UPDATE customers SET email_address='peterteng@hotmail.com', phone_number='+46707671487', viewed_personal=5 WHERE email_address='petertenghamn@hotmail.com';
